@@ -27,3 +27,5 @@ r
 Bapp/src/main/java/com/pemwa/sleeptracker/database/SleepDatabase.kt,0/a/0a1db5e9f97f5088b137193c303fc42bd50f8e25
 }
 Mapp/src/main/java/com/pemwa/sleeptracker/sleeptracker/SleepTrackerFragment.kt,9/b/9b5056d69907eeee6149818aadff77411cb18cca
+z
+Japp/src/main/java/com/pemwa/sleeptracker/sleeptracker/SleepNightAdapter.kt,8/5/855e7e6ee032ffa0ee816ddad9b7596cc94f1f5f

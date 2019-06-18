@@ -67,6 +67,18 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
+        // Associate our adapter with recyclerView
+        val adapter = SleepNightAdapter()
+        binding.sleepList.adapter = adapter
+
+        // Observe nights on the viewModel and set the adapter data when there is any changes
+        viewModel.nights.observe(viewLifecycleOwner, Observer {
+            it.let {
+                adapter.data = it
+            }
+        }
+        )
+
         // Add the viewModel to data binding by setting the current UI-Controller as the lifecycle owner
         // Then assigning the "sleepTrackerViewModel binding variable" to our sleepTrackerViewModel
         binding.lifecycleOwner = this

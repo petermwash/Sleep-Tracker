@@ -39,7 +39,7 @@ class SleepTrackerViewModel(
     private  var tonight = MutableLiveData<SleepNight?>()
 
     // Getting all nights from the database
-    private val nights = database.getAllNights()
+    val nights = database.getAllNights()
 
     // The START button should be visible when tonight is null
     val startButtonVisible = Transformations.map(tonight) {
