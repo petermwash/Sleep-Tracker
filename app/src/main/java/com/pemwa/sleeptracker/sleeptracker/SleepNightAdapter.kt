@@ -1,6 +1,6 @@
 package com.pemwa.sleeptracker.sleeptracker
 
-import android.graphics.Color
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,34 +23,44 @@ class SleepNightAdapter: RecyclerView.Adapter<SleepNightAdapter.CustomViewHolder
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val item = data[position]
-
-        val res = holder.itemView.context.resources
-        holder.sleepLength.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
-        holder.quality.text = convertNumericQualityToString(item.sleepQuality, res)
-
-        holder.qualityImage.setImageResource(when (item.sleepQuality) {
-            0 -> R.drawable.ic_sleep_0
-            1 -> R.drawable.ic_sleep_1
-            2 -> R.drawable.ic_sleep_2
-            3 -> R.drawable.ic_sleep_3
-            4 -> R.drawable.ic_sleep_4
-            5 -> R.drawable.ic_sleep_5
-            else -> R.drawable.ic_sleep_active
-        })
+        holder.bind(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater
-            .inflate(R.layout.list_item_sleep_night, parent, false)
-
-        return CustomViewHolder(view)
+        return CustomViewHolder.from(parent)
     }
 
-    inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val sleepLength: TextView = itemView.findViewById(R.id.sleep_length)
-        val quality: TextView = itemView.findViewById(R.id.quality_string)
-        val qualityImage: ImageView = itemView.findViewById(R.id.quality_image)
-    }
+    class CustomViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val sleepLength = itemView.findViewById<TextView>(R.id.sleep_length)
+        private val quality = itemView.findViewById<TextView>(R.id.quality_string)
+        private val qualityImage = itemView.findViewById<ImageView>(R.id.quality_image)
 
+        fun bind(item: SleepNight) {
+            val res = itemView.context.resources
+            sleepLength.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
+            quality.text = convertNumericQualityToString(item.sleepQuality, res)
+            qualityImage.setImageResource(
+                when (item.sleepQuality) {
+                    0 -> R.drawable.ic_sleep_0
+                    1 -> R.drawable.ic_sleep_1
+                    2 -> R.drawable.ic_sleep_2
+                    3 -> R.drawable.ic_sleep_3
+                    4 -> R.drawable.ic_sleep_4
+                    5 -> R.drawable.ic_sleep_5
+                    else -> R.drawable.ic_sleep_active
+                }
+            )
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): CustomViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = layoutInflater
+                    .inflate(R.layout.list_item_sleep_night, parent, false)
+
+                return CustomViewHolder(view)
+            }
+        }
+
+    }
 }
