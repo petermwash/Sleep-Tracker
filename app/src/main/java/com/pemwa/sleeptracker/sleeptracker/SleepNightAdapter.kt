@@ -11,7 +11,7 @@ import com.pemwa.sleeptracker.databinding.ListItemSleepNightBinding
 import com.pemwa.sleeptracker.util.convertDurationToFormatted
 import com.pemwa.sleeptracker.util.convertNumericQualityToString
 
-class SleepNightAdapter: ListAdapter<SleepNight, SleepNightAdapter.CustomViewHolder>(SleepNightDiffCallback()) {
+class SleepNightAdapter(val clickListener: SleepNightListener): ListAdapter<SleepNight, SleepNightAdapter.CustomViewHolder>(SleepNightDiffCallback()) {
 //    var data = listOf<SleepNight>()
 //        set(value) {
 //            field = value
@@ -23,7 +23,7 @@ class SleepNightAdapter: ListAdapter<SleepNight, SleepNightAdapter.CustomViewHol
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 //        val item = data[position]
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(clickListener,item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -32,8 +32,9 @@ class SleepNightAdapter: ListAdapter<SleepNight, SleepNightAdapter.CustomViewHol
 
     class CustomViewHolder private constructor(private val binding: ListItemSleepNightBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: SleepNight) {
+        fun bind(clickListener: SleepNightListener, item: SleepNight) {
             binding.sleep = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -58,4 +59,8 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<SleepNight>() {
     override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
         return oldItem == newItem
     }
+}
+
+class SleepNightListener(val clickListener: (sleepId: Long) -> Unit) {
+    fun onClick(night: SleepNight) = clickListener(night.nightId)
 }
