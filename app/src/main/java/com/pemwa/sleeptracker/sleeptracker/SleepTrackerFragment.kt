@@ -73,8 +73,9 @@ class SleepTrackerFragment : Fragment() {
 
         // Observe nights on the viewModel and set the adapter data when there is any changes
         viewModel.nights.observe(viewLifecycleOwner, Observer {
-            it.let {
-                adapter.data = it
+            it.let { dataList ->
+//                adapter.data = it
+                adapter.submitList(dataList)
             }
         }
         )
