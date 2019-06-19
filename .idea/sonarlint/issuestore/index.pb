@@ -27,3 +27,13 @@ r
 Bapp/src/main/java/com/pemwa/sleeptracker/database/SleepDatabase.kt,0/a/0a1db5e9f97f5088b137193c303fc42bd50f8e25
 }
 Mapp/src/main/java/com/pemwa/sleeptracker/sleeptracker/SleepTrackerFragment.kt,9/b/9b5056d69907eeee6149818aadff77411cb18cca
+z
+Japp/src/main/java/com/pemwa/sleeptracker/sleeptracker/SleepNightAdapter.kt,8/5/855e7e6ee032ffa0ee816ddad9b7596cc94f1f5f
+|
+Lapp/src/main/java/com/pemwa/sleeptracker/sleepdetail/SleepDetailViewModel.kt,6/3/6312008b3471ba8bc5f29504e7ec38e6b501dcce
+ƒ
+Sapp/src/main/java/com/pemwa/sleeptracker/sleepdetail/SleepDetailViewModelFactory.kt,b/a/ba0b560baef38de4fdf36c623691ece7c180ee69
+{
+Kapp/src/main/java/com/pemwa/sleeptracker/sleepdetail/SleepDetailFragment.kt,c/8/c8e5c625b630c706a280bf2dc5e695bfb04c5d94
+u
+Eapp/src/main/java/com/pemwa/sleeptracker/sleeptracker/BindingUtils.kt,4/a/4a1ead769747b0a7096fbc332f30fe3c2194eaa0

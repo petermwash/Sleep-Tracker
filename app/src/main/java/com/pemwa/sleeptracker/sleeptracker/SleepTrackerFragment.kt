@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 
 import com.pemwa.sleeptracker.R
@@ -67,10 +69,37 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
+        // An observer to trigger navigation when the listener passes the data to viewModel
+        viewModel.navigateToSleepDataQuality.observe(this, Observer { night ->
+            night?.let {
+                this.findNavController().navigate(SleepTrackerFragmentDirections
+                    .actionSleepTrackerFragmentToSleepDetailFragment(night))
+                viewModel.onSleepDataQualityNavigated()
+            }
+        })
+
+        // Associate our adapter with recyclerView
+        val adapter = SleepNightAdapter(SleepNightListener { nightId ->
+            viewModel.onSleepNightClicked(nightId)
+        })
+        binding.sleepList.adapter = adapter
+
+        // Observe nights on the viewModel and set the adapter data when there is any changes
+        viewModel.nights.observe(viewLifecycleOwner, Observer {
+            it.let { dataList ->
+//                adapter.data = it
+                adapter.submitList(dataList)
+            }
+        }
+        )
+
         // Add the viewModel to data binding by setting the current UI-Controller as the lifecycle owner
         // Then assigning the "sleepTrackerViewModel binding variable" to our sleepTrackerViewModel
         binding.lifecycleOwner = this
         binding.sleepTrackerViewModel = viewModel
+
+        val layoutManager = GridLayoutManager(activity, 3)
+        binding.sleepList.layoutManager = layoutManager
 
         return binding.root
     }

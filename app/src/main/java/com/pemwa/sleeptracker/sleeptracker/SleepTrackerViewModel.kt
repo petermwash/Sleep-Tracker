@@ -28,6 +28,12 @@ class SleepTrackerViewModel(
     val showSnackBarEvent: LiveData<Boolean>
         get() = _showSnackbarEvent
 
+    // Defining a handler for click event and adding a MutableLiveData
+    // object to control the navigation
+    private val _navigateToSleepDataQuality = MutableLiveData<Long>()
+    val navigateToSleepDataQuality
+        get() = _navigateToSleepDataQuality
+
     // Defining a job that we use to manage all our coroutines
     private val viewModelJob  = Job()
 
@@ -39,7 +45,7 @@ class SleepTrackerViewModel(
     private  var tonight = MutableLiveData<SleepNight?>()
 
     // Getting all nights from the database
-    private val nights = database.getAllNights()
+    val nights = database.getAllNights()
 
     // The START button should be visible when tonight is null
     val startButtonVisible = Transformations.map(tonight) {
@@ -58,6 +64,15 @@ class SleepTrackerViewModel(
 
     init {
         initializeTonight()
+    }
+
+    // Defining a method to initiate and complete the navigation
+    fun onSleepNightClicked(id: Long) {
+        _navigateToSleepDataQuality.value = id
+    }
+
+    fun onSleepDataQualityNavigated() {
+        _navigateToSleepDataQuality.value = null
     }
 
     private fun initializeTonight() {

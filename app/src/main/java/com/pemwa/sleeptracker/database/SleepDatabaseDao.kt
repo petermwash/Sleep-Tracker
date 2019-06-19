@@ -32,7 +32,7 @@ interface SleepDatabaseDao {
      * @param key a unit id used to identify entities in our database table
      * @return SleepNight? a nullable SleepNight data object
      */
-    @Query("SELECT * from daily_sleep_quality_table WHERE nightId = :key")
+    @Query("SELECT * FROM daily_sleep_quality_table WHERE nightId = :key")
     fun get(key: Long) : SleepNight?
 
     /**
@@ -55,5 +55,11 @@ interface SleepDatabaseDao {
      */
     @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC LIMIT 1")
     fun getTonight(): SleepNight?
+
+    /**
+     * Selects and returns the night with given nightId.
+     */
+    @Query("SELECT * FROM daily_sleep_quality_table WHERE nightId = :key")
+    fun getNightWithId(key: Long): LiveData<SleepNight>
 
 }
