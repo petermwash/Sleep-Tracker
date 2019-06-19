@@ -69,9 +69,18 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
+        // An observer to trigger navigation when the listener passes the data to viewModel
+        viewModel.navigateToSleepDataQuality.observe(this, Observer { night ->
+            night?.let {
+                this.findNavController().navigate(SleepTrackerFragmentDirections
+                    .actionSleepTrackerFragmentToSleepDetailFragment(night))
+                viewModel.onSleepDataQualityNavigated()
+            }
+        })
+
         // Associate our adapter with recyclerView
         val adapter = SleepNightAdapter(SleepNightListener { nightId ->
-            Toast.makeText(context, "$nightId", Toast.LENGTH_LONG).show()
+            viewModel.onSleepNightClicked(nightId)
         })
         binding.sleepList.adapter = adapter
 

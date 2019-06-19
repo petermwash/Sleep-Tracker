@@ -11,7 +11,7 @@ import com.pemwa.sleeptracker.databinding.ListItemSleepNightBinding
 import com.pemwa.sleeptracker.util.convertDurationToFormatted
 import com.pemwa.sleeptracker.util.convertNumericQualityToString
 
-class SleepNightAdapter(val clickListener: SleepNightListener): ListAdapter<SleepNight, SleepNightAdapter.CustomViewHolder>(SleepNightDiffCallback()) {
+class SleepNightAdapter(private val clickListener: SleepNightListener): ListAdapter<SleepNight, SleepNightAdapter.CustomViewHolder>(SleepNightDiffCallback()) {
 //    var data = listOf<SleepNight>()
 //        set(value) {
 //            field = value
